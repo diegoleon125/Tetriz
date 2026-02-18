@@ -1,0 +1,137 @@
+/*DOCUMENT*/
+* {
+    margin: 0 0;
+    font-family: "VT323", monospace;
+    font-style: normal;
+    z-index: -2;
+    position: absolute;
+}
+body {
+    animation: rbw_bg 60s infinite;
+    overflow: hidden;
+}
+
+ /*BG*/
+#b0{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 0.5;
+    background: linear-gradient(0deg,#0000 0%, #000 100%);;
+}
+.bc {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #0005;
+    animation: circl 12s ease-in-out 0s infinite;
+}
+#b2 {    height: 90%;    animation-delay: 0.5s;}
+#b3 {    height: 80%;    animation-delay: 1s;}
+#b4 {    height: 71%;    animation-delay: 1.5s;}
+#b5 {    height: 64%;    animation-delay: 2s;}
+#b6 {    height: 58%;    animation-delay: 2.5s;}
+
+/*GAME*/
+#spc{
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+}
+#gm{
+    position: absolute;
+    background-color: #0008;
+    border: 2px white solid;
+}
+
+/*GUI*/
+.rbwdiv{
+    animation: rbw_col 12s ease-in-out 0s infinite,
+        rbw_br 12s ease-in-out 0s infinite;
+}
+.btn{
+    position: absolute;
+    transform: skewX(-10deg) scale(1);
+    border: 2px solid;
+    background-color: #fff3;
+    z-index: 2;
+    transition: transform 0.6s;
+}
+.btn:hover{
+    transform: skewX(-10deg) scale(1.2);
+}
+
+.fadein{
+    animation: fade 2s ease-in 0s reverse;
+    animation-iteration-count: 1;
+}
+.fadeout{
+    animation: fade 2s ease-in 0s;
+    animation-iteration-count: 1;
+}
+
+@media (orientation: landscape){/*widther*/
+    #gm{
+        height: 90vh;
+        top:-45vh;
+        left: -22.5vh;
+    }
+    .btn{
+        font-size: 10vh;
+    }
+    #play{left: -8vh;}
+    #continue{left: -17vh;}
+}
+@media (orientation: portrait){/*higher*/
+    #gm{
+        width: 45vw;
+        left: -22vw;
+        top: -44.5vw;
+    }
+    .btn{
+        font-size: 10vw;
+    }
+    #play{left: -8vw;}
+    #continue{left: -17vw;}
+}
+
+@keyframes circl {
+    0% {top:0vh;}
+    25% {top:-10vh;}
+    50% {top:-2vh;}
+    75% {top:-10vh;}
+    100% {top:0vh;}
+
+}
+
+@keyframes rbw_bg {
+    0% {background-color: #07f;}
+    20% {background-color: #0ff;}
+    40% {background-color: #1f0;}
+    60% {background-color: #fe0;}
+    80% {background-color: #f08;}
+    100% {background-color: #07f;}
+  }
+
+@keyframes rbw_col {
+    0% {color: #07f;}
+    20% {color: #0ff;}
+    40% {color: #1f0;}
+    60% {color: #fe0;}
+    80% {color: #f08;}
+    100% {color: #07f;}
+  }
+
+@keyframes rbw_br {
+    0% {border-color: #07f;}
+    20% {border-color: #0ff;}
+    40% {border-color: #1f0;}
+    60% {border-color: #fe0;}
+    80% {border-color: #f08;}
+    100% {border-color: #07f;}
+  }
+
+@keyframes fade {
+    0%{opacity: 0;}
+    100%{opacity: 1;}    
+}

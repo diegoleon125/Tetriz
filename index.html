@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+    <head>
+        <title>TETRIZ</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="img/icon.png">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div style="position: absolute;height: 100vh; width: 100vw; z-index: -2;">
+            <div id="b1" class="bc"></div>
+            <div id="b2" class="bc"></div>
+            <div id="b3" class="bc"></div>
+            <div id="b4" class="bc"></div>
+            <div id="b5" class="bc"></div>
+            <div id="b6" class="bc"></div>
+            <div id="b0"></div>
+        </div>
+        <div id="spc">
+            <canvas id="gm" width="320" height="640" style="opacity:1; z-index: -1;"></canvas>
+        </div>
+        <script type="module" src="main.js"></script>
+    </body>
+</html>
