@@ -1,75 +1,72 @@
 import {Board} from './Board.js';
-
+import {Timer} from './Timer.js';
 //ATRIBUTES
-let gs= -1;
-let board;
+let gs= -1;//0pause 1play 2end
+const board = new Board(end);
+const loop = new Timer(fall);
+let speed = 1;
 document.addEventListener('DOMContentLoaded', () =>{
-    dBtn("spc","play","PLAY",() => {
-            start();
-        })
+    dBtn("spc","play","PLAY",() => {start();});
     const canv = document.getElementById("gm");
     const ctx = canv.getContext("2d");
-    board = new Board(ctx);
+    board.ctx = ctx;
 })
 window.addEventListener("keydown", (e) => {
     if (["Enter","Space","KeyQ","KeyW"].includes(e.code) && e.repeat) return;
 
     if (e.code === "Enter") start();
-    if (gs >= 0){
-        if (e.code === "ArrowLeft" || e.code === "KeyA") move(-1);
-        if (e.code === "ArrowRight" || e.code === "KeyD") move();
-        if (e.code === "ArrowDown" || e.code === "KeyS") down();
-        if (e.code === "KeyQ") rotate(false);
-        if (e.code === "KeyW") rotate();
-        if (e.code === "Space") place();
+    if (gs > 0){
+        if (e.code === "ArrowLeft" || e.code === "KeyA") board.move(-1);
+        if (e.code === "ArrowRight" || e.code === "KeyD") board.move();
+        if (e.code === "ArrowDown" || e.code === "KeyS") board.down();
+        if (e.code === "KeyQ") board.rotate(false);
+        if (e.code === "KeyW") board.rotate();
+        if (e.code === "Space") board.place();
     }
 });
     
 //GAME FUNCTS
 function start(){
-    if (gs >= 0) return pause();
-    const btn = document.getElementById("play");
-    if (btn) fade(btn,0,500,() => {btn.remove();});
-    gs = 0;
-
+    if (gs > 0) return pause();
+    let btn = document.getElementById("play");
+    if (!btn) btn = document.getElementById("continue");
+    fade(btn,0,500,() => {btn.remove();});
+    if (gs == -1){
+        board.clean();
+        board.addTetro();
+    }
+    gs = 1;
     console.log("starting");
-    board.clean();
-    const canv = document.getElementById("gm");
-    const ctx = canv.getContext("2d");
-    ctx.fillStyle = "#fff7";
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "#fff7";
-    for (let i = 32; i <= 320; i += 32) {
-        ctx.beginPath();
-        ctx.moveTo(i,0);
-        ctx.lineTo(i,640);
-        ctx.stroke();
-    }
-    for (let j = 32; j <= 640; j += 32) {
-        ctx.beginPath();
-        ctx.moveTo(0,j);
-        ctx.lineTo(320,j);
-        ctx.stroke();
-    }
+    
+    loop.start();
 }
 function pause(){
-
+    if (gs){
+        loop.pause();
+        console.log("paused");
+        let btn = document.getElementById("continue");
+        if (btn) btn.remove();
+        dBtn("spc","continue","CONTINUE",() => {start();});
+    } else {
+        loop.start();
+        console.log("started");
+    }
+    gs = gs == 0 ? 1 : 0;
 }
 function end(){
-    
+    loop.stop();
+    gs = -1;
+    dBtn("spc","continue","NEW_GAME",() => {start();});
+
+
 }
 
 //INPUT FUNCTS
-function move(rh = 1){
-
+function fall(){
+    console.log("speed: " + loop.speed)
+    board.down();
 }
-function down(){
-
-}
-function place(){
-
-}
-function rotate(hor = true){
+function pauseInterval(){
 
 }
 
