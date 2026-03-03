@@ -1,15 +1,25 @@
+/*
+ * Proyecto: Tetri-z (diy fanmade)
+ * Autor: Diego León
+ * Fecha: 2026-03-
+ */
 import {Board} from './Board.js';
 import {Timer} from './Timer.js';
 //ATRIBUTES
 let gs= -1;//0pause 1play 2end
 const board = new Board(end);
 const loop = new Timer(fall);
-let speed = 1;
 document.addEventListener('DOMContentLoaded', () =>{
     dBtn("spc","play","PLAY",() => {start();});
     const canv = document.getElementById("gm");
     const ctx = canv.getContext("2d");
     board.ctx = ctx;
+    const canv2 = document.getElementById("next");
+    const nctx = canv2.getContext("2d");
+    nctx.shadowColor = "#fff";
+    nctx.shadowBlur = 30;
+    board.nctx = nctx;
+    
 })
 window.addEventListener("keydown", (e) => {
     if (["Enter","Space","KeyQ","KeyW"].includes(e.code) && e.repeat) return;
@@ -22,6 +32,7 @@ window.addEventListener("keydown", (e) => {
         if (e.code === "KeyQ") board.rotate(false);
         if (e.code === "KeyW") board.rotate();
         if (e.code === "Space") board.place();
+        if (e.code === "ShiftLeft") board.change();
     }
 });
     
@@ -31,8 +42,11 @@ function start(){
     let btn = document.getElementById("play");
     if (!btn) btn = document.getElementById("continue");
     fade(btn,0,500,() => {btn.remove();});
+    const next = document.getElementById("next");
+    fade(next,1,1000,()=>{});
     if (gs == -1){
         board.clean();
+        board.getNextTetro();
         board.addTetro();
     }
     gs = 1;
@@ -57,20 +71,17 @@ function end(){
     loop.stop();
     gs = -1;
     dBtn("spc","continue","NEW_GAME",() => {start();});
-
-
+    const next = document.getElementById("next");
+    fade(next,0,1000,()=>{});
 }
 
 //INPUT FUNCTS
 function fall(){
     console.log("speed: " + loop.speed)
+    const spd = document.getElementById("speed");
+    spd.innerHTML = loop.speed + " b/s";
     board.down();
 }
-function pauseInterval(){
-
-}
-
-
 //BACK FUNCTS
 function dBtn(parentid,id,text,func){   //create button
     const par = document.getElementById(parentid);
@@ -82,21 +93,22 @@ function dBtn(parentid,id,text,func){   //create button
     par.appendChild(btn);
 
     btn.addEventListener('click',func);
-} //this func has only one use at the time
+}
 
 function fade(elem,to,time,func){
-    elem.disabled = true;
-    let it = Math.round(time/100);
-    let op2= 1/ it;
-    op2 *= to == 0? -1: 1; 
+    elem.disabled = to == 0;
+    let it = Math.round(time/50);
+    let part = 1/ it;
+    part *= to? 1: -1; 
     let foo = setInterval(() => {
-        let xd = parseFloat(window.getComputedStyle(elem).opacity);
-        xd += op2;
-        elem.style.opacity = xd;
+        let current = parseFloat(window.getComputedStyle(elem).opacity);
+        current += part;
+        elem.style.opacity = current;
         it--;
         if (it == 0){
+            elem.style.opacity = to? 1 : 0;
             func();
             clearInterval(foo);
         }
-    },125);
-} //this too
+    },50);
+} //this has one use

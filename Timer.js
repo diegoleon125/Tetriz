@@ -1,3 +1,7 @@
+/*
+ * Clase del timer
+ * Autor: Diego León
+ */
 export class Timer {
     constructor(func) {
         this.id = null;

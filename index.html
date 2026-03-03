@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<html>
+    <!--
+        Estructura de la página
+        Autor: Diego León
+    -->
     <head>
         <title>TETRIZ</title>
         <link rel="stylesheet" href="style.css">
@@ -20,6 +25,19 @@
         </div>
         <div id="spc">
             <canvas id="gm" width="320" height="640" style="opacity:1; z-index: -1;"></canvas>
+            <div id="nspc">
+                <canvas id="next" width="192" height="192" style="opacity:0; z-index: -1;"></canvas>
+            </div>
+            <div id="ispc">
+                <div id="info">
+                    <h1 style="position: relative; text-align: center;">TETRIZ</h1>
+                    <p class="txt" id="speed">0 b/s</p>
+                    <p class="txt" id="points">puntos: ---</p>
+                    <p class="txt" id="time">tiempo: </p>
+                    <p class="txt">mejor puntuación</p>
+                    <p class="txt" id="best">---</p>
+                </div>
+            </div>
         </div>
         <script type="module" src="main.js"></script>
     </body>

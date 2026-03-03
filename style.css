@@ -1,3 +1,8 @@
+/*
+ * Estilo de la página
+ * Autor: Diego León
+ */
+
 /*DOCUMENT*/
 * {
     margin: 0 0;
@@ -43,7 +48,30 @@ body {
     background-color: #0008;
     border: 2px white solid;
 }
-
+#next{
+    position: absolute;
+    background-color: #0000;
+    animation: floating-x 20s infinite linear;
+}
+#nspc{
+    animation: floating-y 20s infinite ease-in-out;
+}
+#info{
+    z-index: -1;
+    color: white;
+    pointer-events: none;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    animation: floating-x 20s infinite linear;
+}
+.txt{
+    position: relative;
+    text-align: center;
+}
+#ispc{
+    animation: floating-y 20s infinite ease-in-out;
+}
 /*GUI*/
 .rbwdiv{
     animation: rbw_col 12s ease-in-out 0s infinite,
@@ -76,8 +104,19 @@ body {
         top:-45vh;
         left: -22.5vh;
     }
+    #next{
+        height: 24vh;
+        left: 29vh;
+    }
+    #info{
+        height: 24vh;
+        left: -50vh;
+    }
     .btn{
         font-size: 10vh;
+    }
+    .txt{
+        font-size: 4vh;
     }
     #play{left: -8vh;}
     #continue{left: -17vh;}
@@ -88,8 +127,19 @@ body {
         left: -22vw;
         top: -44.5vw;
     }
+    #next{
+        width: 24vw;
+        left: 29vw;
+    }
+    #info{
+        width: 24vw;
+        left: -50vw;
+    }
     .btn{
         font-size: 10vw;
+    }
+    .txt{
+        font-size: 4vw;
     }
     #play{left: -8vw;}
     #continue{left: -17vw;}
@@ -102,6 +152,30 @@ body {
     75% {top:-10vh;}
     100% {top:0vh;}
 
+}
+@keyframes floating-x {
+    0% {transform: translateX(0vh) rotate(0deg);}
+    10% {transform: translateX(2vh) rotate(2deg);}
+    20% {transform: translateX(0vh) rotate(1deg);}
+    30% {transform: translateX(-2vh) rotate(-2deg);}
+    40% {transform: translateX(-0.5vh) rotate(-3deg);}
+    50% {transform: translateX(2vh) rotate(-2deg);}
+    60% {transform: translateX(0vh) rotate(3deg);}
+    70% {transform: translateX(1.7vh) rotate(1deg);}
+    80% {transform: translateX(-2vh) rotate(-2deg);}
+    90% {transform: translateX(-1vh) rotate(1deg);}
+}
+@keyframes floating-y {
+    0% {transform: translateY(0vh) rotate(0deg); opacity: 1;}
+    10% {transform: translateY(2vh) rotate(2deg); opacity: 0.8;}
+    20% {transform: translateY(3vh) rotate(1deg); opacity: 0.6;}
+    30% {transform: translateY(1.5vh) rotate(-2deg); opacity: 0.7;}
+    40% {transform: translateY(-2vh) rotate(-3deg); opacity: 0.5;}
+    50% {transform: translateY(0vh) rotate(-2deg); opacity: 0.9;}
+    60% {transform: translateY(0.5vh) rotate(3deg); opacity: 1;}
+    70% {transform: translateY(-1.7vh) rotate(1deg); opacity: 0.7;}
+    80% {transform: translateY(-1vh) rotate(-2deg); opacity: 0.5;}
+    90% {transform: translateY(1vh) rotate(1deg); opacity: 0.8;}
 }
 
 @keyframes rbw_bg {
