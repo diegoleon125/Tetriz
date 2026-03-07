@@ -7,8 +7,18 @@ import {Board} from './Board.js';
 import {Timer} from './Timer.js';
 //ATRIBUTES
 let gs= -1;//0pause 1play 2end
-const board = new Board(end);
+let t = 0;
+let p = 0;
+let bestscore = 0;
+let besttime = 0;
+const board = new Board(end, acc);
 const loop = new Timer(fall);
+const time_loop = new Timer(() => {
+    t++;
+    if (t % 4000 == 0) loop.speed = (loop.speed * 1.02).toFixed(2);
+    document.getElementById("time").innerHTML = "tiempo: " + msToTime(t);
+    },1000);
+
 document.addEventListener('DOMContentLoaded', () =>{
     dBtn("spc","play","PLAY",() => {start();});
     const canv = document.getElementById("gm");
@@ -19,6 +29,17 @@ document.addEventListener('DOMContentLoaded', () =>{
     nctx.shadowColor = "#fff";
     nctx.shadowBlur = 30;
     board.nctx = nctx;
+
+    const bstp = localStorage.getItem("bestp");
+    if (bstp) {
+        bestscore = parseInt(bstp);
+        document.getElementById("bestp").innerHTML = bestscore;
+    }
+    const bstt = localStorage.getItem("bestt");
+    if (bstt){
+        besttime = bstt;
+        document.getElementById("bestt").innerHTML = "tiempo: " + msToTime(besttime);
+    }
     
 })
 window.addEventListener("keydown", (e) => {
@@ -49,39 +70,59 @@ function start(){
         board.getNextTetro();
         board.addTetro();
     }
-    gs = 1;
-    console.log("starting");
-    
+    gs = 1;    
     loop.start();
+    time_loop.start();
 }
 function pause(){
     if (gs){
         loop.pause();
-        console.log("paused");
+        time_loop.pause();
         let btn = document.getElementById("continue");
         if (btn) btn.remove();
         dBtn("spc","continue","CONTINUE",() => {start();});
     } else {
         loop.start();
-        console.log("started");
+        time_loop.start();
     }
     gs = gs == 0 ? 1 : 0;
 }
 function end(){
     loop.stop();
+    time_loop.stop();
     gs = -1;
     dBtn("spc","continue","NEW_GAME",() => {start();});
     const next = document.getElementById("next");
     fade(next,0,1000,()=>{});
+    if (bestscore < p) {
+        bestscore = p;
+        document.getElementById("bestp").innerHTML = bestscore;
+        localStorage.setItem("bestp",bestscore);
+    }
+    p = 0;
+    if (besttime < t && p > 0) {
+        besttime = t;
+        document.getElementById("bestt").innerHTML = msToTime(besttime);
+        localStorage.setItem("bestt",besttime);
+    }
+    t = 0;
+    document.getElementById("points").innerHTML = "puntos: ---";
+    document.getElementById("time").innerHTML = "tiempo: -:--.-";
 }
 
 //INPUT FUNCTS
 function fall(){
-    console.log("speed: " + loop.speed)
     const spd = document.getElementById("speed");
     spd.innerHTML = loop.speed + " b/s";
     board.down();
 }
+function acc(rows){
+    loop.speed = (loop.speed * (1 + (0.02 * rows))).toFixed(2);
+    points += Math.pow(2,rows) * 50;
+    document.getElementById("points").innerHTML = "puntos: " + points;
+
+}
+
 //BACK FUNCTS
 function dBtn(parentid,id,text,func){   //create button
     const par = document.getElementById(parentid);
@@ -112,3 +153,9 @@ function fade(elem,to,time,func){
         }
     },50);
 } //this has one use
+function msToTime(number){
+    const mm = Math.floor(number/600000);
+    const ss = Math.floor((number%600000)/1000);
+    const ms = Math.floor(number%1000);
+    return mm + ":" +(ss < 10? '0' : '') + ss + "." + ms;
+}

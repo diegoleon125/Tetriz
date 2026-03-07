@@ -3,13 +3,14 @@
  * Autor: Diego León
  */
 export class Timer {
-    constructor(func) {
+    constructor(func, spd = 1) {
         this.id = null;
         this.state = 0;
-        this.speed = 1;
+        this.speed = spd;
         this.func = func;
         this.startTime = null;
         this.remaining = 0;
+        this.defspd = spd;
     }
 
     start() {
@@ -24,17 +25,17 @@ export class Timer {
         if (this.remaining){
             this.remaining = this.remaining - (new Date() - this.startTime);
         } else {
-            this.remaining = 1000 - (new Date() - this.startTime);
+            this.remaining = (1000/speed) - (new Date() - this.startTime);
             this.startTime = new Date();
         }
         clearTimeout(this.id);
         this.state = 0;
-        console.log(this.remaining + "ms remaining");
     }
     stop() {
         clearTimeout(this.id);
         this.state = 0;
         this.remaining = 0;
+        this.speed = this.defspd;
     }
     callback(){
         this.func();

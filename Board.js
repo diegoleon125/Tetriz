@@ -4,7 +4,7 @@
  */
 import {Tetro} from './Tetro.js';
 export class Board {
-    constructor(gmovr){
+    constructor(gmovr, clr){
         this.last3 = [];
         /** @type {CanvasRenderingContext2D}*/
         this.ctx = null;
@@ -17,6 +17,7 @@ export class Board {
         this.next = null;
         this.blocks = new Image();
         this.gameoverfunc = gmovr;
+        this.clearfunc = clr;
         this.canchange = true;
 
         this.backup.width = 320;
@@ -229,6 +230,7 @@ export class Board {
             }
             this.grid = newgrid;
             this.save();
+            this.clearfunc(total);
         }
     }
     
