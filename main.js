@@ -118,8 +118,8 @@ function fall(){
 }
 function acc(rows){
     loop.speed = (loop.speed * (1 + (0.02 * rows))).toFixed(2);
-    points += Math.pow(2,rows) * 50;
-    document.getElementById("points").innerHTML = "puntos: " + points;
+    p += Math.pow(2,rows) * 50;
+    document.getElementById("points").innerHTML = "puntos: " + p;
 
 }
 
