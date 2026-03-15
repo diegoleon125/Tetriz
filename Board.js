@@ -24,7 +24,7 @@ export class Board {
         this.backup.height = 640;
         this.lines.width = 320;
         this.lines.height = 640;
-        this.blocks.src = '/img/blocks.png';
+        this.blocks.src = './img/blocks.png';
     }
     //BOARD
     clean(){
