@@ -99,12 +99,12 @@ function end(){
         document.getElementById("bestp").innerHTML = bestscore;
         localStorage.setItem("bestp",bestscore);
     }
-    p = 0;
     if (besttime < t && p > 0) {
         besttime = t;
         document.getElementById("bestt").innerHTML = msToTime(besttime);
         localStorage.setItem("bestt",besttime);
     }
+    p = 0;
     t = 0;
     document.getElementById("points").innerHTML = "puntos: ---";
     document.getElementById("time").innerHTML = "tiempo: -:--.-";
